@@ -1,8 +1,20 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useState } from 'react';
+import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function HomeScreen() {
 
-  
+  const [input, setInput] = useState('')
+  const [id, setId] = useState(0);
+  const [messages, setMessages] = useState<{ id: string; text: string }[]>([]);
+
+
+  const handleAdd = () => {
+    if (input.trim() === '') return;
+
+    setMessages([...messages, { id: id.toString(), text: 'ItsWanglee: '+input }]);
+    setId(id + 1);
+    setInput('');
+  };
 
 
   return (
@@ -19,10 +31,15 @@ export default function HomeScreen() {
               <View style={{flex: 1, backgroundColor: 'white', justifyContent: 'center'}}>
                 <Text style={{textAlign:'center', fontSize: 20, fontWeight: 'bold'}}>How's your day everyone????</Text>
               </View>
-              <ScrollView style={{flex: 1, backgroundColor: 'yellow'}}>
-                <Text>yoo</Text>
-              </ScrollView>
-              <TextInput placeholder='Add a comment...' style={{backgroundColor: 'white', color: 'black', fontWeight: 'bold', borderWidth: 1, borderColor: 'black'}}></TextInput>
+              <View style={{flex: 1,borderWidth: 1, borderColor: 'black', backgroundColor: '#ffffffff'}}>
+                <FlatList
+                data={messages} keyExtractor={(item) => item.id} renderItem={({ item })=>  (<View style={{margin: 3, }}> <Text>{item.text}</Text> </View>)}
+                />
+
+               
+              </View>
+              <TextInput  placeholder='Add a comment...' style={{backgroundColor: 'white', color: 'black', fontWeight: 'bold', borderWidth: 1, borderColor: 'black'}}value={input} onChangeText={setInput}/> 
+              <TouchableOpacity onPress={handleAdd} style={{position: 'absolute', marginTop: 346, marginLeft: 317, backgroundColor: 'dodgerblue', height: 40,width: 50, justifyContent: 'center'}} > <Text style={{color: 'white', fontWeight: 'bold', textAlign:'center'}}>Send</Text></TouchableOpacity > 
         </View>
         
         <View style={{flex: 1, }}>
