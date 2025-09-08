@@ -11,7 +11,7 @@ export default function HomeScreen() {
   const handleAdd = () => {
     if (input.trim() === '') return;
 
-    setMessages([...messages, { id: id.toString(), text: 'ItsWanglee: '+input }]);
+    setMessages([...messages, { id: id.toString(), text: '(ItsWanglee) '+input }]);
     setId(id + 1);
     setInput('');
   };
